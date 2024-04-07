@@ -1,6 +1,7 @@
 workspace = { members = [
-  "ComfortFunction",
-  "InputInterface",
-  "Perception",
-  "reSimulation",
-] }
+    "ad",
+    "iif",
+    "perception",
+    "app",
+    "types",
+], resolver = "1" }

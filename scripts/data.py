@@ -57,9 +57,9 @@ def generate_vehicle_data(id_: int) -> dict:
         speed_data[it] = speed_data[it - 1] + np.random.normal(loc=0.0, scale=0.5)
 
     data_dict = {
-        "Lane": lane_data,
-        "Distance": distance,
-        "Speed": speed_data,
+        "lane": lane_data,
+        "distance": distance,
+        "speed": speed_data,
     }
     return data_dict
 
@@ -74,8 +74,8 @@ def main() -> int:
         json.dump(vehicle_datas, file_object)
 
     ego_vehicle_data = {
-        "Lane": int(LaneAssociation.CENTER.value),
-        "Speed": kph_to_mps(np.random.uniform(110, 130)),
+        "lane": int(LaneAssociation.CENTER.value),
+        "speed": kph_to_mps(np.random.uniform(110, 130)),
     }
 
     with open(EGO_VEHICLE_FILEPATH, "w") as file_object:
