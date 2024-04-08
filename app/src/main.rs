@@ -51,16 +51,8 @@ fn main() {
     let veh_data_iter = iif::get_vehicles_data_iter(&vehicles_filepath);
 
     for (frame, vehs_data_in_frame) in veh_data_iter {
-        for veh_id in 0..types::iif::constants::NUM_VEHICLES {
-            println!(
-                "Frame: {} Veh: {} on Lane: {:?}\n",
-                frame,
-                veh_id,
-                vehs_data_in_frame.get(veh_id)
-            );
-        }
-        println!("");
-
         iif::load_cycle_data(&mut vehicles, &vehs_data_in_frame);
+
+        ad::print_scene(&ego_vehicle, &vehicles);
     }
 }
