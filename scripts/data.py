@@ -13,7 +13,7 @@ class LaneAssociation(enum.Enum):
 
 
 NUM_VEHICLES = 6
-NUM_ITERATIONS = 1_000
+NUM_ITERATIONS = 20
 FPS = 25
 
 VEHICLE_FILENAME = "vehicle_data.json"
