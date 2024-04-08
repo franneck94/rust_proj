@@ -13,7 +13,7 @@ class LaneAssociation(enum.Enum):
 
 
 NUM_VEHICLES = 6
-NUM_ITERATIONS = 10
+NUM_ITERATIONS = 3
 FPS = 25
 
 VEHICLE_FILENAME = "vehicle_data.json"
@@ -72,14 +72,16 @@ def main() -> int:
 
     remapped_vehicle_data = {}
     for frame in range(NUM_ITERATIONS):
-        frame_data = {
-            veh_id: {
+        frame_data = [
+            {
                 "lane": vehicle_datas[veh_id]["lane"],
+                "id": veh_id,
                 "distance": vehicle_datas[veh_id]["distance"],
                 "speed": vehicle_datas[veh_id]["speed"][frame],
             }
             for veh_id in range(NUM_VEHICLES)
-        }
+        ]
+
         remapped_vehicle_data[frame] = frame_data
 
     with open(VEHICLE_FILEPATH, "w") as file_object:

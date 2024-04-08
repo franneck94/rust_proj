@@ -38,29 +38,29 @@ fn get_default_paths() -> (String, String) {
 }
 
 fn main() {
-    let (ego_data_abs_path, veh_data_abs_path) = get_default_paths();
-
     let args = Args::parse();
 
+    let (ego_data_abs_path, veh_data_abs_path) = get_default_paths();
     let vehicles_filepath = args.vehicles_filepath.unwrap_or_else(|| veh_data_abs_path);
-
     let ego_filepath = args.ego_filepath.unwrap_or_else(|| ego_data_abs_path);
 
-    let mut cycle: u32 = 0;
     let mut ego_vehicle = types::adas::VehicleType::new();
     let mut vehicles = types::adas::NeighborVehiclesType::new();
 
     iif::init_ego_vehicle(&ego_filepath, &mut ego_vehicle);
     let veh_data_iter = iif::get_vehicles_data_iter(&vehicles_filepath);
 
-    for (frame, veh_data_in_frame) in veh_data_iter {
+    for (frame, vehs_data_in_frame) in veh_data_iter {
         for veh_id in 0..types::iif::constants::NUM_VEHICLES {
             println!(
-                "Frame: {} Veh: {} on Lane: {:?}",
+                "Frame: {} Veh: {} on Lane: {:?}\n",
                 frame,
                 veh_id,
-                veh_data_in_frame[&veh_id.to_string()].lane
+                vehs_data_in_frame.get(veh_id)
             );
         }
+        println!("");
+
+        iif::load_cycle_data(&mut vehicles, &vehs_data_in_frame);
     }
 }

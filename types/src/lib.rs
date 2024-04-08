@@ -6,7 +6,7 @@ pub mod adas {
         pub const LONGITUDINAL_DIFFERENCE_PERCENTAGE: f32 = 0.05;
     }
 
-    #[derive(Debug, Clone)]
+    #[derive(Debug, Clone, PartialEq, Eq)]
     pub enum LaneAssociationType {
         LEFT,
         CENTER,
@@ -15,8 +15,12 @@ pub mod adas {
     }
 
     impl LaneAssociationType {
-        pub fn from(lane: u32) -> Self {
-            match lane {
+        pub fn from<T>(lane: T) -> Self
+        where
+            T: Into<u32>,
+        {
+            let lane_u32: u32 = lane.into();
+            match lane_u32 {
                 0 => LaneAssociationType::LEFT,
                 1 => LaneAssociationType::CENTER,
                 2 => LaneAssociationType::RIGHT,
