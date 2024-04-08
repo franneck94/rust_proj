@@ -8,7 +8,7 @@ use std::{fs::File, io::BufReader};
 pub struct DataEntry {
     pub lane: i32,
     pub distance: f64,
-    pub speed: Vec<f64>,
+    pub speed: f64,
 }
 
 #[derive(Debug, Deserialize)]
@@ -28,11 +28,11 @@ pub fn init_ego_vehicle(filepath: &str, ego_vehicle: &mut types::adas::VehicleTy
     ego_vehicle.lane = types::adas::LaneAssociationType::from(data.lane);
 }
 
-pub fn init_vehicles(filepath: &str) -> HashMap<String, DataEntry> {
+pub fn get_vehicles_data_iter(filepath: &str) -> HashMap<String, HashMap<String, DataEntry>> {
     let mut file = File::open(filepath).expect("Failed to open file");
     let mut data = String::new();
     file.read_to_string(&mut data).expect("Failed to read file");
-    let deserialized_data: HashMap<String, DataEntry> =
+    let deserialized_data: HashMap<String, HashMap<String, DataEntry>> =
         serde_json::from_str(&data).expect("Failed to deserialze data");
 
     deserialized_data

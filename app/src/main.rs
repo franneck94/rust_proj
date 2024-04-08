@@ -14,6 +14,7 @@ struct Args {
 
 fn get_default_paths() -> (String, String) {
     let project_dir_buf = env::current_dir().unwrap();
+    // XXX: While debugging the path is diffrent when launched in vscode
     let mut project_dir = Path::new(&project_dir_buf).parent().unwrap();
     if !project_dir.to_str().unwrap().contains("rust_proj") {
         project_dir = Path::new(&project_dir_buf);
@@ -50,9 +51,16 @@ fn main() {
     let mut vehicles = types::adas::NeighborVehiclesType::new();
 
     iif::init_ego_vehicle(&ego_filepath, &mut ego_vehicle);
-    let veh_data_iter = iif::init_vehicles(&vehicles_filepath);
+    let veh_data_iter = iif::get_vehicles_data_iter(&vehicles_filepath);
 
-    for (idx, entry) in veh_data_iter {
-        println!("{} {:?}", idx, entry);
+    for (frame, veh_data_in_frame) in veh_data_iter {
+        for veh_id in 0..types::iif::constants::NUM_VEHICLES {
+            println!(
+                "Frame: {} Veh: {} on Lane: {:?}",
+                frame,
+                veh_id,
+                veh_data_in_frame[&veh_id.to_string()].lane
+            );
+        }
     }
 }
