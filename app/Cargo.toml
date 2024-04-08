@@ -9,5 +9,4 @@ edition = "2021"
 types = { path = "../types" }
 iif = { path = "../iif" }
 ad = { path = "../ad" }
-perception = { path = "../perception" }
 clap = { version = "4.5.3", features = ["derive"] }

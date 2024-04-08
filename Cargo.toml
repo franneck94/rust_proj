@@ -1,7 +1,1 @@
-workspace = { members = [
-    "ad",
-    "iif",
-    "perception",
-    "app",
-    "types",
-], resolver = "1" }
+workspace = { members = ["ad", "iif", "app", "types"], resolver = "1" }
